@@ -8,8 +8,10 @@ class FullPost extends Component {
     loadedPost: null
   };
 
-  componentDidUpdate() {
-    if (this.props.id) {
+  componentDidMount() {
+    console.log(this.props);
+    // we reach that match.params.id
+    if (this.props.match.params.id) {
       // this line prevent infinitive loop. when we fetch the data from database
       // we should only new data be called.
       if (
@@ -17,7 +19,7 @@ class FullPost extends Component {
         (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)
       ) {
         axios
-          .get("/posts/" + this.props.id)
+          .get("/posts/" + this.props.match.params.id)
           .then(response => {
             this.setState({ loadedPost: response.data });
             //console.log(response);

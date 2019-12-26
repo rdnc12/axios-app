@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Posts from "./Posts/Posts";
 import NewPost from "../Blog/NewPost/NewPost";
+import FullPost from './FullPost/FullPost';
 
 import { Route, NavLink } from "react-router-dom";
 // Link prevent page reloading when we click it.
@@ -47,6 +48,7 @@ class Blog extends Component {
         {/* render is for short info messages. */}
         <Route path="/" exact component={Posts} />
         <Route path="/new-post" component={NewPost} />
+        <Route path="/:id" exact component={FullPost} />
       </div>
     );
   }
