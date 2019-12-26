@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Posts from "./Posts/Posts";
-import NewPost from '../Blog/NewPost/NewPost'
+import NewPost from "../Blog/NewPost/NewPost";
 
-import { Route,Link } from "react-router-dom";
+import { Route, NavLink } from "react-router-dom";
 // Link prevent page reloading when we click it.
+// NavLink has some props to change styling.
 import "./Blog.css";
 
 class Blog extends Component {
@@ -14,21 +15,36 @@ class Blog extends Component {
           <nav>
             <ul>
               <li>
-                <Link to='/'> Home</Link>
+                <NavLink
+                  activeStyle={{
+                    color: "#fa923f",
+                    textDecoration: "underline"
+                  }}
+                  activeClassName="my-active"
+                  exact
+                  to="/"
+                >
+                  {" "}
+                  Home
+                </NavLink>
               </li>
               <li>
-                <Link to={{
-                  pathname:'/new-post',
-                  hash:'#submit',
-                  search:'?quick-submit=true'
-                }}>New Post</Link>
+                <NavLink
+                  to={{
+                    pathname: "/new-post",
+                    hash: "#submit",
+                    search: "?quick-submit=true"
+                  }}
+                >
+                  New Post
+                </NavLink>
               </li>
             </ul>
           </nav>
         </header>
         {/* <Route path='/' exact render={()=> <h1>eee</h1>}/> // exact show us only one rendered path
         <Route path='/'  render={()=> <h1>eee2</h1>}/> */}
-         {/* render is for short info messages. */}
+        {/* render is for short info messages. */}
         <Route path="/" exact component={Posts} />
         <Route path="/new-post" component={NewPost} />
       </div>
@@ -37,3 +53,6 @@ class Blog extends Component {
 }
 
 export default Blog;
+
+// an absolute path is always appended to our domain.(for example /new-post. this append our link at the end)
+// a relative path = this.props.match.url +/new-post
