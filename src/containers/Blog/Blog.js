@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import Posts from "./Posts/Posts";
-import AsynComponent from '../../hoc/AsyncComponent';
+import AsynComponent from "../../hoc/AsyncComponent";
 //import NewPost from "../Blog/NewPost/NewPost";
- 
+
 import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 // Link prevent page reloading when we click it.
 // NavLink has some props to change styling.
@@ -10,9 +10,24 @@ import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 // Switch tells the react-router: only load one of the routes.
 import "./Blog.css";
 
-const AsyncNewPost=AsynComponent(()=>{
-  return import("../Blog/NewPost/NewPost")
+const AsyncNewPost = AsynComponent(() => {
+  return import("../Blog/NewPost/NewPost");
 });
+
+// this is a new method
+// const AsyncNewPost=React.lazy(()=>
+//   import("../Blog/NewPost/NewPost")
+// );
+
+// usage of lazy loading function
+{/* <Route
+  path="/posts"
+  render={() => (
+    <Suspense fallback={<div>...loading</div>}>
+      <AsyncNewPost />
+    </Suspense>
+  )}
+/>; */}
 
 class Blog extends Component {
   state = {
@@ -62,7 +77,7 @@ class Blog extends Component {
           ) : null}
           <Route path="/posts" component={Posts} />
           {/* catching unknown routes. Handling 404 case with a route without a path */}
-          <Route render={()=> <h1>Not Authenticated/Found</h1>} />
+          <Route render={() => <h1>Not Authenticated/Found</h1>} />
           {/* <Redirect from="/" to="/posts" /> */}
           {/* <Route path="/" component={Posts} /> redirect to /posts */}
         </Switch>
