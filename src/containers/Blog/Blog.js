@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Posts from "./Posts/Posts";
 import NewPost from "../Blog/NewPost/NewPost";
 
-
 import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 // Link prevent page reloading when we click it.
 // NavLink has some props to change styling.
@@ -11,6 +10,9 @@ import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 import "./Blog.css";
 
 class Blog extends Component {
+  state = {
+    auth: false
+  };
   render() {
     return (
       <div className="Blog">
@@ -48,11 +50,15 @@ class Blog extends Component {
         {/* <Route path='/' exact render={()=> <h1>eee</h1>}/> // exact show us path which has exact name. 
         <Route path='/'  render={()=> <h1>eee2</h1>}/> */}
         {/* render is for short info messages. */}
-       
+
         <Switch>
-          <Route path="/new-post" component={NewPost} />
+          {this.state.auth ? (
+            <Route path="/new-post" component={NewPost} />
+          ) : null}
           <Route path="/posts" component={Posts} />
-          <Redirect from='/' to='/posts' />
+          {/* catching unknown routes. Handling 404 case with a route without a path */}
+          <Route render={()=> <h1>Not Authenticated/Found</h1>} />
+          {/* <Redirect from="/" to="/posts" /> */}
           {/* <Route path="/" component={Posts} /> redirect to /posts */}
         </Switch>
       </div>
