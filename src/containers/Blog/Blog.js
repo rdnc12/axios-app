@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Posts from "./Posts/Posts";
-import NewPost from "../Blog/NewPost/NewPost";
-
+import AsynComponent from '../../hoc/AsyncComponent';
+//import NewPost from "../Blog/NewPost/NewPost";
+ 
 import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 // Link prevent page reloading when we click it.
 // NavLink has some props to change styling.
@@ -9,9 +10,13 @@ import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 // Switch tells the react-router: only load one of the routes.
 import "./Blog.css";
 
+const AsyncNewPost=AsynComponent(()=>{
+  return import("../Blog/NewPost/NewPost")
+});
+
 class Blog extends Component {
   state = {
-    auth: false
+    auth: true
   };
   render() {
     return (
@@ -53,7 +58,7 @@ class Blog extends Component {
 
         <Switch>
           {this.state.auth ? (
-            <Route path="/new-post" component={NewPost} />
+            <Route path="/new-post" component={AsyncNewPost} />
           ) : null}
           <Route path="/posts" component={Posts} />
           {/* catching unknown routes. Handling 404 case with a route without a path */}
