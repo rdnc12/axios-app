@@ -21,7 +21,10 @@ class NewPost extends Component {
     axios
       .post("/posts", data)
       .then(response => {
-        this.setState({submitted:true});
+        // if we use push , we can easily go back
+        // if we use replace, it is not possible to go back.
+        this.props.history.replace('/posts')
+        // this.setState({submitted:true});
         console.log(response);
       });
   };
