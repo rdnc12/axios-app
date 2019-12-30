@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Posts from "./Posts/Posts";
 import NewPost from "../Blog/NewPost/NewPost";
-import FullPost from './FullPost/FullPost';
 
-import { Route, NavLink } from "react-router-dom";
+
+import { Route, NavLink, Switch } from "react-router-dom";
 // Link prevent page reloading when we click it.
 // NavLink has some props to change styling.
+
+// Switch tells the react-router: only load one of the routes.
 import "./Blog.css";
 
 class Blog extends Component {
@@ -23,7 +25,7 @@ class Blog extends Component {
                   }}
                   activeClassName="my-active"
                   exact
-                  to="/"
+                  to="/posts/"
                 >
                   {" "}
                   Home
@@ -43,12 +45,14 @@ class Blog extends Component {
             </ul>
           </nav>
         </header>
-        {/* <Route path='/' exact render={()=> <h1>eee</h1>}/> // exact show us only one rendered path
+        {/* <Route path='/' exact render={()=> <h1>eee</h1>}/> // exact show us path which has exact name. 
         <Route path='/'  render={()=> <h1>eee2</h1>}/> */}
         {/* render is for short info messages. */}
-        <Route path="/" exact component={Posts} />
-        <Route path="/new-post" component={NewPost} />
-        <Route path="/:id" exact component={FullPost} />
+       
+        <Switch>
+          <Route path="/new-post" component={NewPost} />
+          <Route path="/posts" component={Posts} />
+        </Switch>
       </div>
     );
   }
